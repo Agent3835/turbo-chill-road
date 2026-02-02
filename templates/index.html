@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHILLRoad - Topografía Táctica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Sincronizado con guardar_punto.html
+                        'midnight': '#0f172a',
+                        'safety-amber': '#f59e0b',
+                        'safety-amber-hover': '#d97706',
+                        'slate-dark': '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'drift': 'drift 60s linear infinite',
+                    },
+                    keyframes: {
+                        drift: {
+                            '0%': { transform: 'translate(0, 0)' },
+                            '100%': { transform: 'translate(-50px, -50px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap');
+        
+        /* Contenedor sobredimensionado para permitir el movimiento continuo (drift) */
+        .map-container {
+            width: 200%;
+            height: 200%;
+            position: absolute;
+            top: -50%;
+            left: -50%;
+        }
+    </style>
+</head>
+<body class="bg-midnight font-sans text-slate-200 overflow-hidden h-screen w-full selection:bg-safety-amber selection:text-midnight">
+
+    <div class="fixed inset-0 z-0 opacity-20 pointer-events-none">
+        <div class="map-container animate-drift">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <pattern id="topo-pattern" x="0" y="0" width="400" height="400" patternUnits="userSpaceOnUse">
+                        <path d="M0 400C100 390 150 350 200 350C250 350 300 390 400 400" fill="none" stroke="#475569" stroke-width="1.5"/>
+                        <path d="M0 350C80 340 160 300 200 300C240 300 320 340 400 350" fill="none" stroke="#475569" stroke-width="1.5"/>
+                        <path d="M0 300C60 290 140 250 200 250C260 250 340 290 400 300" fill="none" stroke="#475569" stroke-width="1.5"/>
+                        <path d="M0 250C40 240 120 200 200 200C280 200 360 240 400 250" fill="none" stroke="#475569" stroke-width="1.5"/>
+                        <path d="M0 200C20 190 100 150 200 150C300 150 380 190 400 200" fill="none" stroke="#475569" stroke-width="1.5"/>
+                        <path d="M0 150C50 140 110 100 200 100C290 100 350 140 400 150" fill="none" stroke="#475569" stroke-width="1.5"/>
+                        <path d="M0 100C70 90 130 50 200 50C270 50 330 90 400 100" fill="none" stroke="#475569" stroke-width="1.5"/>
+                        <path d="M0 50C90 40 140 10 200 10C260 10 310 40 400 50" fill="none" stroke="#475569" stroke-width="1.5"/>
+                    </pattern>
+
+                    <g id="route-marker">
+                        <circle r="20" fill="#f59e0b" opacity="0.2">
+                             <animate attributeName="r" from="5" to="30" dur="2s" repeatCount="indefinite" />
+                             <animate attributeName="opacity" from="0.6" to="0" dur="2s" repeatCount="indefinite" />
+                        </circle>
+                        <circle r="5" fill="#f59e0b" stroke="#0f172a" stroke-width="2"/>
+                    </g>
+                </defs>
+                
+                <rect width="100%" height="100%" fill="url(#topo-pattern)" />
+
+                <svg viewBox="0 0 1200 1200" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" style="overflow: visible;">
+                    
+                    <path d="M 200 300 Q 500 100, 800 500 T 1300 800" 
+                          fill="none" 
+                          stroke="#f59e0b" 
+                          stroke-width="2" 
+                          stroke-dasharray="12 8" 
+                          stroke-linecap="round" 
+                          opacity="0.8"/>
+
+                    <use href="#route-marker" x="200" y="300" />
+                    <text x="180" y="280" fill="#f59e0b" font-family="monospace" font-weight="bold" font-size="14" opacity="0.8">PUNTO A</text>
+                    
+                    <use href="#route-marker" x="1300" y="800" />
+                    <text x="1320" y="790" fill="#f59e0b" font-family="monospace" font-weight="bold" font-size="14" opacity="0.8">PUNTO B</text>
+
+                </svg>
+            </svg>
+        </div>
+    </div>
+
+    <div class="fixed inset-0 z-10 bg-[radial-gradient(circle_at_center,transparent_0%,#0f172a_90%)] pointer-events-none"></div>
+
+    <header class="relative p-4 border-b border-slate-700 bg-midnight/95 flex justify-between items-center z-50 shadow-md shrink-0 h-16">
+        <div class="flex items-center gap-4 z-10">
+            <h1 class="text-xl md:text-2xl font-black tracking-tight text-white">
+                CHILL<span class="text-safety-amber">ROAD</span>
+            </h1>
+        </div>
+
+        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none hidden md:block">
+             <span class="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-slate-500 border border-slate-700 bg-slate-800/50 px-3 py-1 rounded-full">
+                Sistema de Navegación
+             </span>
+        </div>
+
+        <a href="#" class="z-10 group flex items-center gap-2 pl-4 pr-2 py-1 rounded hover:bg-white/5 transition-all text-slate-400 hover:text-white">
+            <span class="text-xs font-bold uppercase tracking-widest hidden sm:inline-block pt-px">
+                Acceso
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" 
+                 class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300 relative top-[0.5px]">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+        </a>
+    </header>
+
+    <main class="relative z-20 h-[calc(100vh-64px)] flex flex-col justify-center items-center px-4 text-center">
+        
+        <div class="mb-8 flex items-center gap-3 px-4 py-2 border border-slate-700 rounded-full bg-slate-800/50 backdrop-blur-sm shadow-lg">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-safety-amber opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-safety-amber"></span>
+            </span>
+            <span class="text-xs font-mono text-safety-amber tracking-widest uppercase">Versión 2.4</span>
+        </div>
+
+        <h1 class="text-5xl md:text-8xl font-black tracking-tight mb-6 text-slate-100 leading-[0.9]">
+            MAPAS PARA <br />
+            <span class="relative inline-block">
+                LO INCIERTO
+                <svg class="absolute w-full h-3 -bottom-1 left-0 text-safety-amber" viewBox="0 0 200 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.00025 6.99997C2.00025 6.99997 122.5 1.49997 197.5 5.99997" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </span>
+        </h1>
+
+        <p class="text-slate-400 text-lg md:text-xl max-w-lg mx-auto mb-10 leading-relaxed font-medium">
+            No dejes tu seguridad al azar. Navegación de precisión optimizada para entornos seguros.
+        </p>
+
+        <a href="/explorar" class="group relative px-10 py-5 bg-safety-amber hover:bg-safety-amber-hover text-midnight font-extrabold text-lg rounded overflow-hidden shadow-[0_0_30px_-5px_rgba(245,158,11,0.3)] hover:shadow-[0_0_50px_-10px_rgba(245,158,11,0.5)] transition-all duration-300 inline-block">
+            <div class="relative z-10 flex items-center gap-3">
+                <span>EXPLORAR MAPA</span>
+                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </div>
+        </a>
+        
+        <div class="absolute bottom-10 flex gap-8 text-xs font-mono text-slate-600 select-none">
+            <div>LAT: 32.5234° N</div>
+            <div>LON: 117.0223° W</div>
+            <div>ELEV: 320M</div>
+        </div>
+
+    </main>
+
+</body>
+</html>

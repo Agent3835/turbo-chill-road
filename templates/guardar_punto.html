@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chillroad - Dashboard</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'midnight': '#0f172a',
+                        'safety-amber': '#f59e0b',
+                        'safety-amber-hover': '#d97706',
+                        'slate-dark': '#1e293b',
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    transitionTimingFunction: {
+                        'soft-landing': 'cubic-bezier(0.4, 0, 0.2, 1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        
+        .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+            background: #0f172a; color: #e2e8f0;
+            border: 1px solid #f59e0b; padding: 0; 
+            overflow: hidden; border-radius: 0.5rem;
+        }
+        .leaflet-popup-content { margin: 0 !important; width: auto !important; }
+        .leaflet-container a.leaflet-popup-close-button { display: none; }
+        
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-midnight text-slate-200 h-screen flex flex-col overflow-hidden">
+
+    <header class="relative p-4 border-b border-slate-700 bg-midnight/95 flex justify-between items-center z-20 shadow-md shrink-0 h-16">
+        <div class="flex items-center gap-4 z-10">
+            <h1 class="text-xl md:text-2xl font-black tracking-tight text-white">
+                CHILL<span class="text-safety-amber">ROAD</span>
+            </h1>
+        </div>
+
+        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+             <span class="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-safety-amber border border-safety-amber/30 bg-safety-amber/10 px-3 py-1 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.1)]">
+                Modo Exploración
+             </span>
+        </div>
+
+        <a href="/" class="z-10 group flex items-center gap-2 pl-4 pr-2 py-1 rounded hover:bg-white/5 transition-all text-slate-400 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" 
+                 class="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300 relative top-[0.5px]">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+            </svg>
+            <span class="text-xs font-bold uppercase tracking-widest hidden sm:inline-block pt-px">
+                Inicio
+            </span>
+        </a>
+    </header>
+
+    <main class="flex-grow flex flex-col md:flex-row h-full overflow-hidden relative">
+        
+        <div id="map-col" class="relative flex-1 order-2 md:order-1 transition-all duration-700 ease-soft-landing">
+            <div id="map" class="w-full h-full bg-gray-200"></div>
+        </div>
+
+        <aside id="sidebar-col" class="bg-slate-dark border-b md:border-b-0 md:border-l border-slate-700 flex flex-col w-full md:w-80 transition-[width] duration-700 ease-soft-landing order-1 md:order-2 z-10 shadow-xl relative overflow-hidden">
+            
+            <div id="sidebar-header" class="p-3 border-b border-slate-700 bg-slate-900/50 flex justify-between items-center h-14 shrink-0 overflow-hidden transition-all duration-700 ease-soft-landing">
+                
+                <h2 id="sidebar-title" class="font-bold text-slate-200 uppercase tracking-wider text-xs whitespace-nowrap transition-all duration-500 ease-out overflow-hidden">
+                    Puntos <span class="text-safety-amber">Detectados</span>
+                </h2>
+                
+                <button onclick="toggleSidebar()" class="text-slate-400 hover:text-safety-amber hover:bg-slate-800 p-1.5 rounded transition-colors focus:outline-none min-w-[30px] flex justify-center" title="Colapsar/Expandir Panel">
+                    <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform duration-700 ease-soft-landing rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div id="lista-lugares" class="flex-1 overflow-y-auto p-4 space-y-3 transition-opacity duration-500 ease-in-out">
+                <div id="empty-state" class="text-center py-10 opacity-50 flex flex-col items-center justify-center">
+                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center mb-3 text-lg">📍</div>
+                    <p class="text-[10px] uppercase tracking-widest text-slate-500">Sin datos</p>
+                </div>
+            </div>
+
+            <div id="collapsed-label" class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-700">
+                <span class="transform -rotate-90 text-xs font-bold tracking-[0.3em] text-slate-600 uppercase whitespace-nowrap">
+                    REGISTRO
+                </span>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        const map = L.map('map', { zoomControl: false }).setView([32.5149, -117.0382], 13);
+        
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+        // --- GLOBAL: INVENTARIO DE MARCADORES ---
+        // Aquí guardaremos la referencia: { ID_BASE_DATOS : OBJETO_MARKER_LEAFLET }
+        const markers = {}; 
+
+        // --- LÓGICA DEL TOGGLE ---
+        let isCollapsed = false;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar-col');
+            const header = document.getElementById('sidebar-header');
+            const title = document.getElementById('sidebar-title');
+            const list = document.getElementById('lista-lugares');
+            const icon = document.getElementById('toggle-icon');
+            const collapsedLabel = document.getElementById('collapsed-label');
+
+            isCollapsed = !isCollapsed;
+
+            if (isCollapsed) {
+                sidebar.classList.remove('md:w-80');
+                sidebar.classList.add('md:w-16'); 
+                title.classList.add('w-0', 'opacity-0', 'p-0', 'm-0');
+                header.classList.remove('justify-between');
+                header.classList.add('justify-center');
+                list.classList.add('opacity-0', 'pointer-events-none');
+                icon.classList.add('rotate-180');
+                collapsedLabel.classList.remove('opacity-0');
+            } else {
+                sidebar.classList.remove('md:w-16');
+                sidebar.classList.add('md:w-80');
+                title.classList.remove('w-0', 'opacity-0', 'p-0', 'm-0');
+                header.classList.remove('justify-center');
+                header.classList.add('justify-between');
+                list.classList.remove('opacity-0', 'pointer-events-none');
+                icon.classList.remove('rotate-180');
+                collapsedLabel.classList.add('opacity-0');
+            }
+
+            let count = 0;
+            const interval = setInterval(() => {
+                map.invalidateSize();
+                count++;
+                if(count > 20) clearInterval(interval);
+            }, 35);
+        }
+
+        setTimeout(() => {
+            const zoomIn = document.querySelector('.leaflet-control-zoom-in');
+            const zoomOut = document.querySelector('.leaflet-control-zoom-out');
+            if (zoomIn) zoomIn.setAttribute('aria-label', 'Acercar mapa');
+            if (zoomOut) zoomOut.setAttribute('aria-label', 'Alejar mapa');
+        }, 500);
+
+        let tempMarker = null;
+
+        function showToast(message, type = 'info') {
+            let toast = document.getElementById('toast-notification');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'toast-notification';
+                toast.className = 'fixed bottom-10 left-1/2 md:left-1/3 transform -translate-x-1/2 px-6 py-3 rounded shadow-xl border font-bold transition-all duration-300 z-[9999] opacity-0 translate-y-4 bg-midnight pointer-events-none text-sm';
+                document.body.appendChild(toast);
+            }
+            const isError = (type === 'error' || type === 'cancel');
+            toast.className = toast.className.replace(/border-[\w-]+|text-[\w-]+/g, ''); 
+            toast.classList.add(isError ? 'border-red-500' : 'border-safety-amber');
+            toast.classList.add(isError ? 'text-red-100' : 'text-white');
+
+            toast.textContent = message;
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translate(-50%, 0)';
+            });
+            setTimeout(() => { 
+                toast.style.opacity = '0'; 
+                toast.style.transform = 'translate(-50%, 1rem)';
+            }, 3000);
+        }
+
+        function eliminarCard(id, elementoHTML) {
+            event.stopPropagation();
+
+            if(!confirm("¿Eliminar coordenada permanentemente?")) return;
+
+            elementoHTML.style.opacity = '0.5';
+
+            fetch(`/eliminar_punto/${id}`, {
+                method: 'DELETE'
+            })
+            .then(res => {
+                if (res.ok) {
+                    // 1. ELIMINAR DEL MAPA VISUALMENTE
+                    if (markers[id]) {
+                        map.removeLayer(markers[id]); // Adiós ícono
+                        delete markers[id]; // Adiós referencia en memoria
+                    }
+
+                    // 2. ANIMAR Y ELIMINAR DE LA LISTA
+                    elementoHTML.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        elementoHTML.remove();
+                        const lista = document.getElementById('lista-lugares');
+                        if(lista.children.length <= 1) { 
+                             document.getElementById('empty-state').style.display = 'flex';
+                        }
+                    }, 300);
+                    showToast('Punto eliminado', 'cancel');
+                } else {
+                    showToast('Error al eliminar', 'error');
+                    elementoHTML.style.opacity = '1';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                elementoHTML.style.opacity = '1';
+            });
+        }
+
+        function agregarCardLista(lat, lng, id) {
+            const lista = document.getElementById('lista-lugares');
+            const emptyState = document.getElementById('empty-state');
+            
+            if(emptyState) emptyState.style.display = 'none';
+
+            const card = document.createElement('div');
+            card.className = "bg-midnight border border-slate-600 p-3 rounded hover:border-safety-amber transition-all duration-300 group cursor-pointer relative overflow-hidden animate-[fadeIn_0.5s_ease-out]";
+            
+            card.innerHTML = `
+                <div class="flex justify-between items-start relative z-10">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="w-2 h-2 rounded-full bg-safety-amber animate-pulse"></span>
+                            <p class="text-[10px] text-slate-400 font-mono">ID: ${id}</p>
+                        </div>
+                        <p class="font-bold text-white text-sm whitespace-nowrap">Punto guardado</p>
+                        <p class="text-[10px] text-safety-amber mt-1 font-mono tracking-tighter">
+                            ${lat.toFixed(4)}, ${lng.toFixed(4)}
+                        </p>
+                    </div>
+                    
+                    <button 
+                        onclick="eliminarCard(${id}, this.closest('.group'))"
+                        class="text-slate-500 hover:text-red-400 p-1 -mr-1 -mt-1 transition-colors z-20 hover:bg-white/5 rounded"
+                        title="Eliminar registro">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="absolute inset-0 bg-gradient-to-r from-safety-amber/0 to-safety-amber/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+            `;
+            
+            card.addEventListener('click', () => {
+                if (isCollapsed) toggleSidebar();
+                map.flyTo([lat, lng], 16, { animate: true, duration: 1.5 });
+            });
+
+            lista.prepend(card); 
+        }
+
+        map.on('click', function(e) {
+            if (tempMarker) {
+                map.removeLayer(tempMarker);
+                tempMarker = null;
+            }
+
+            const { lat, lng } = e.latlng;
+            tempMarker = L.marker([lat, lng]).addTo(map);
+
+            const container = document.createElement('div');
+            container.className = "flex flex-col min-w-[200px]"; 
+            
+            const titleBox = document.createElement('div');
+            titleBox.className = "p-3 text-center border-b border-slate-700/50";
+            titleBox.innerHTML = '<h3 class="text-[10px] font-black text-safety-amber font-mono tracking-widest m-0">REGISTRAR UBICACIÓN</h3>';
+
+            const btnContainer = document.createElement('div');
+            btnContainer.className = "flex w-full";
+
+            const btnCancel = document.createElement('button');
+            btnCancel.innerText = "✕";
+            btnCancel.className = "flex-1 py-3 bg-midnight hover:bg-slate-800 text-slate-500 hover:text-red-400 font-bold transition-colors border-r border-slate-700/50";
+            
+            const btnConfirm = document.createElement('button');
+            btnConfirm.innerText = "GUARDAR";
+            btnConfirm.className = "flex-[2] py-3 bg-safety-amber hover:bg-safety-amber-hover text-midnight font-bold transition-colors text-xs tracking-wider";
+
+            btnCancel.onclick = (ev) => {
+                L.DomEvent.stopPropagation(ev);
+                map.removeLayer(tempMarker);
+                tempMarker = null;
+                showToast('Cancelado', 'cancel');
+            };
+
+            btnConfirm.onclick = (ev) => {
+                L.DomEvent.stopPropagation(ev);
+                
+                // MANTENER LA REFERENCIA AL MARCADOR
+                const markerToSave = tempMarker;
+                
+                tempMarker = null;
+                markerToSave.closePopup();
+                showToast('Transmitiendo...', 'info');
+
+                fetch('/guardar_punto', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ lat: lat, lng: lng })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.mensaje) {
+                        showToast('¡COORDENADA SEGURA!', 'success');
+                        
+                        // REGISTRAR EL MARCADOR EN EL INVENTARIO GLOBAL
+                        markers[data.id] = markerToSave;
+                        
+                        agregarCardLista(lat, lng, data.id);
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    showToast('Error de señal', 'error');
+                    map.removeLayer(markerToSave);
+                });
+            };
+
+            btnContainer.appendChild(btnCancel);
+            btnContainer.appendChild(btnConfirm);
+            container.appendChild(titleBox);
+            container.appendChild(btnContainer);
+
+            tempMarker.bindPopup(container).openPopup();
+            
+            tempMarker.on('popupclose', function() {
+                if (tempMarker === this) {
+                    map.removeLayer(this);
+                    tempMarker = null;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
