@@ -12,7 +12,7 @@
 
 ## Instalación local
 
-Para poner en marcha el panel de control táctico localmente, sigue estos comandos en tu terminal:
+Para poner en marcha el panel de control localmente, sigue estos comandos en tu terminal:
 
 **En Windows:**
 ```bash
