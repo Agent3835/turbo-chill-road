@@ -1,9 +1,16 @@
-ítulo del Proyecto: 
+# 🎨 TijuArte Urbano - Explorador de Murales
 
-Cómo correrlo: 
+![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-orange)
+![Stack](https://img.shields.io/badge/Stack-Flask%20|%20Leaflet%20|%20Tailwind-blue)
+![Contribuciones](https://img.shields.io/badge/Contribuciones-Abiertas-brightgreen)
 
-Stack Tecnológico: Flask, Leaflet, Tailwind.
+Una plataforma inmersiva diseñada para redescubrir la identidad visual de Tijuana a través de sus rutas artísticas y murales urbanos.
 
-Justificación de Diseño:
+---
 
-Créditos a la IA: "Este código fue co-creado con Gemini Canvas. Prompt principal: 
+## 🚀 Cómo correrlo localmente
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/tu-usuario/tu-repositorio.git](https://github.com/tu-usuario/tu-repositorio.git)
+   cd tu-repositorio
