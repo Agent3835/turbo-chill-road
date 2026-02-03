@@ -1,14 +1,15 @@
-# 🗺️ CHILLRoad - Topografía Táctica
+# CHILLRoad - MAPAS PARALO INCIERTO
 
 ![Estado](https://img.shields.io/badge/Estado-Prototipo-f59e0b)
 ![Stack](https://img.shields.io/badge/Stack-Flask%20|%20Leaflet%20|%20Tailwind-blue)
-![Seguridad](https://img.shields.io/badge/Seguridad-Optimizado-success)
 
-**Navegación de precisión optimizada para entornos seguros. No dejes tu seguridad al azar.**
+**No dejes tu seguridad al azar. Navegación de precisión optimizada para entornos seguros.**
+
+**[ACCEDER A LA APP EN VIVO](https://agent3835.pythonanywhere.com/)**
 
 ---
 
-## 🚀 Instalación y Ejecución del Servidor
+## Instalación local
 
 Para poner en marcha el panel de control táctico localmente, sigue estos comandos en tu terminal:
 
