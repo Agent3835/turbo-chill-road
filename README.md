@@ -1,4 +1,4 @@
-# CHILLRoad - MAPAS PARALO INCIERTO
+# CHILLRoad - MAPAS PARA LO INCIERTO
 
 ![Estado](https://img.shields.io/badge/Estado-Prototipo-f59e0b)
 ![Stack](https://img.shields.io/badge/Stack-Flask%20|%20Leaflet%20|%20Tailwind-blue)
