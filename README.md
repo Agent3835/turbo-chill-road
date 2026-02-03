@@ -25,7 +25,7 @@ Para poner en marcha el panel de control táctico localmente, sigue estos comand
    ```bash
    python -m venv venv
    cd venv
-   source venv/bin/activate
+   source bin/activate
 
 2. **Clonar el repositorio:**
    ```bash
