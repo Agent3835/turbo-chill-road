@@ -14,12 +14,14 @@
 Para poner en marcha el panel de control táctico localmente, sigue estos comandos en tu terminal:
 
 **En Windows**
+
    ```bash
    python -m venv venv
    cd venv 
    Scripts\activate
    
 **En Linux/Mac:**
+
    ```bash
    python -m venv venv
    cd venv
