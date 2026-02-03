@@ -22,11 +22,14 @@ Para poner en marcha el panel de control táctico localmente, sigue estos comand
 python -m venv venv
 cd venv
 Scripts\activate
+```
 
-En Linux/Mac:
+**En Linux/Mac:**
+```bash
 python -m venv venv
 cd venv
 source bin/activate
+```
 
 1. Instalar dependencias: Este proyecto utiliza Flask como motor de backend.
 pip install flask
