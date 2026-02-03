@@ -31,18 +31,18 @@ cd venv
 source bin/activate
 ```
 
-1. Instalar dependencias: Este proyecto utiliza Flask como motor de backend.
+1. **Instalar dependencias: Este proyecto utiliza Flask como motor de backend.**
 ```bash
 pip install flask
 ```
 
-2.- Clonar el repositorio:
+2. **Clonar el repositorio:**
 ```bash
 git clone [https://github.com/Agent3835/turbo-chill-road.git](https://github.com/Agent3835/turbo-chill-road.git)
 cd turbo-chill-road
 ```
 
-3. Correr el proyecto
+3. **Correr el proyecto:**
 ```bash
-3. python main.py
+python main.py
 ```
