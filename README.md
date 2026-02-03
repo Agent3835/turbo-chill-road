@@ -1,16 +1,18 @@
-# 🎨 TijuArte Urbano - Explorador de Murales
+# 🗺️ CHILLRoad - Topografía Táctica
 
-![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-orange)
+![Estado](https://img.shields.io/badge/Estado-Prototipo-f59e0b)
 ![Stack](https://img.shields.io/badge/Stack-Flask%20|%20Leaflet%20|%20Tailwind-blue)
-![Contribuciones](https://img.shields.io/badge/Contribuciones-Abiertas-brightgreen)
+![Seguridad](https://img.shields.io/badge/Seguridad-Optimizado-success)
 
-Una plataforma inmersiva diseñada para redescubrir la identidad visual de Tijuana a través de sus rutas artísticas y murales urbanos.
+**Navegación de precisión optimizada para entornos seguros. No dejes tu seguridad al azar.**
 
 ---
 
-## 🚀 Cómo correrlo localmente
+## 🚀 Instalación y Ejecución del Servidor
+
+Para poner en marcha el panel de control táctico localmente, sigue estos comandos en tu terminal:
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone [https://github.com/tu-usuario/tu-repositorio.git](https://github.com/tu-usuario/tu-repositorio.git)
-   cd tu-repositorio
+   git clone [https://github.com/tu-usuario/chillroad.git](https://github.com/tu-usuario/chillroad.git)
+   cd chillroad
