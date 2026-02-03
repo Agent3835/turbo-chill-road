@@ -56,3 +56,8 @@ Los controles de ZOOM los ubicamos abajo a la derecha, pensando en que la interf
 <p align="justify">
 En cuanto a la Landing Page, usamos un gran botón ámbar debajo del eslogan para atraer la atención inmediata del usuario.
 </p>
+
+## Créditos a la IA
+<p align="justify">
+Este código fue co-creado con Gemini Canvas. 
+</p>
