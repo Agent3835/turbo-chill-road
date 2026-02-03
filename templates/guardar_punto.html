@@ -57,20 +57,21 @@
 </head>
 <body class="bg-midnight text-slate-200 h-screen flex flex-col overflow-hidden">
 
-    <header class="relative p-4 border-b border-slate-700 bg-midnight/95 flex justify-between items-center z-20 shadow-md shrink-0 h-16">
-        <div class="flex items-center gap-4 z-10">
-            <h1 class="text-xl md:text-2xl font-black tracking-tight text-white">
+    <header class="relative p-3 md:p-4 border-b border-slate-700 bg-midnight/95 flex justify-between items-center z-20 shadow-md shrink-0 h-14 md:h-16">
+        
+        <div class="flex items-center gap-2 md:gap-4 z-10">
+            <h1 class="text-lg md:text-2xl font-black tracking-tight text-white leading-none">
                 CHILL<span class="text-safety-amber">ROAD</span>
             </h1>
         </div>
 
-        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-             <span class="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-safety-amber border border-safety-amber/30 bg-safety-amber/10 px-3 py-1 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.1)]">
+        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none whitespace-nowrap">
+             <span class="text-[9px] md:text-xs font-bold uppercase tracking-[0.15em] md:tracking-[0.2em] text-safety-amber border border-safety-amber/30 bg-safety-amber/10 px-2 md:px-3 py-0.5 md:py-1 rounded-full shadow-[0_0_10px_rgba(245,158,11,0.1)]">
                 Modo Exploración
              </span>
         </div>
 
-        <a href="/" class="z-10 group flex items-center gap-2 pl-4 pr-2 py-1 rounded hover:bg-white/5 transition-all text-slate-400 hover:text-white">
+        <a href="/" class="z-10 group flex items-center gap-2 pl-2 md:pl-4 pr-1 md:pr-2 py-1 rounded hover:bg-white/5 transition-all text-slate-400 hover:text-white">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" 
                  class="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-300 relative top-[0.5px]">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
@@ -100,7 +101,9 @@
                 
                 <button onclick="toggleSidebar(event)" class="text-slate-400 hover:text-safety-amber hover:bg-slate-800 p-1.5 rounded transition-colors focus:outline-none min-w-[30px] flex justify-center" title="Colapsar/Expandir Panel">
                     <svg id="toggle-icon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform duration-700 ease-soft-landing rotate-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" class="md:hidden" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" class="hidden md:block" /> </svg>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" class="md:hidden" /> 
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" class="hidden md:block" /> 
+                    </svg>
                 </button>
             </div>
             
@@ -135,15 +138,12 @@
 
         const markers = {}; 
 
-        // --- LÓGICA DEL TOGGLE RESPONSIVE ---
         let isCollapsed = false;
 
-        // Función auxiliar para detectar si estamos en móvil (ancho < 768px - 'md' de Tailwind)
         function isMobile() {
             return window.innerWidth < 768;
         }
 
-        // Si se da clic al header en móvil, toggleamos (mejor UX)
         function handleMobileHeaderClick() {
             if (isMobile()) {
                 toggleSidebar();
@@ -151,7 +151,7 @@
         }
 
         function toggleSidebar(e) {
-            if(e) e.stopPropagation(); // Evitar doble trigger si se hace clic en el botón dentro del header
+            if(e) e.stopPropagation(); 
 
             const sidebar = document.getElementById('sidebar-col');
             const header = document.getElementById('sidebar-header');
@@ -163,22 +163,18 @@
             isCollapsed = !isCollapsed;
 
             if (isMobile()) {
-                // --- LÓGICA MÓVIL (Altura) ---
                 if (isCollapsed) {
-                    // Colapsar (Solo header visible)
                     sidebar.classList.remove('h-[40vh]');
-                    sidebar.classList.add('h-14'); // Altura fija del header
-                    icon.classList.add('rotate-180'); // Girar flecha móvil
-                    list.style.opacity = '0'; // Ocultar lista suavemente
+                    sidebar.classList.add('h-14'); 
+                    icon.classList.add('rotate-180'); 
+                    list.style.opacity = '0'; 
                 } else {
-                    // Expandir
                     sidebar.classList.remove('h-14');
                     sidebar.classList.add('h-[40vh]');
                     icon.classList.remove('rotate-180');
                     list.style.opacity = '1';
                 }
             } else {
-                // --- LÓGICA DESKTOP (Ancho) ---
                 if (isCollapsed) {
                     sidebar.classList.remove('md:w-80');
                     sidebar.classList.add('md:w-16'); 
@@ -200,11 +196,9 @@
                 }
             }
 
-            // Recalcular tamaño del mapa
             setTimeout(() => { map.invalidateSize(); }, 300);
         }
 
-        // Inicializar colapsado en móvil para dar prioridad al mapa
         if (isMobile()) {
             toggleSidebar();
         }
@@ -267,7 +261,6 @@
             });
         }
 
-        // MODIFICADO: Ahora recibe el parámetro 'nombre'
         function agregarCardLista(lat, lng, id, nombre) {
             const lista = document.getElementById('lista-lugares');
             const emptyState = document.getElementById('empty-state');
@@ -277,7 +270,6 @@
             const card = document.createElement('div');
             card.className = "bg-midnight border border-slate-600 p-3 rounded hover:border-safety-amber transition-all duration-300 group cursor-pointer relative overflow-hidden animate-[fadeIn_0.5s_ease-out]";
             
-            // Usamos el nombre en el HTML
             card.innerHTML = `
                 <div class="flex justify-between items-start relative z-10">
                     <div class="w-full pr-2">
@@ -304,13 +296,11 @@
             `;
             
             card.addEventListener('click', () => {
-                // Si está colapsado en PC, expandir. Si es móvil, colapsar para ver el mapa
                 if (!isMobile() && isCollapsed) toggleSidebar();
                 if (isMobile() && !isCollapsed) toggleSidebar(); 
                 
                 map.flyTo([lat, lng], 16, { animate: true, duration: 1.5 });
                 
-                // Mostrar popup del marcador
                 if(markers[id]) markers[id].openPopup();
             });
 
@@ -326,7 +316,6 @@
             const { lat, lng } = e.latlng;
             tempMarker = L.marker([lat, lng]).addTo(map);
 
-            // --- NUEVO UI DEL POPUP CON INPUT ---
             const container = document.createElement('div');
             container.className = "flex flex-col min-w-[240px]"; 
             
@@ -337,14 +326,12 @@
             const formBox = document.createElement('div');
             formBox.className = "p-3 bg-midnight";
             
-            // Input para el nombre
             const inputNombre = document.createElement('input');
             inputNombre.type = "text";
             inputNombre.placeholder = "Nombre del lugar (ej. Casa Segura)";
             inputNombre.className = "w-full bg-slate-800 border border-slate-600 text-slate-200 text-xs p-2 rounded focus:border-safety-amber focus:outline-none placeholder-slate-500 mb-2 transition-colors";
             inputNombre.autocomplete = "off";
 
-            // Focus automático (truco para que funcione en popup)
             setTimeout(() => inputNombre.focus(), 100);
 
             const btnContainer = document.createElement('div');
@@ -380,7 +367,7 @@
                     body: JSON.stringify({ 
                         lat: lat, 
                         lng: lng,
-                        nombre: nombreIngresado // ENVIAMOS EL NOMBRE
+                        nombre: nombreIngresado 
                     })
                 })
                 .then(res => res.json())
@@ -388,7 +375,6 @@
                     if(data.mensaje) {
                         showToast('¡COORDENADA SEGURA!', 'success');
                         
-                        // Agregar popup permanente con el nombre
                         markerToSave.bindPopup(`
                             <div class="text-center p-2">
                                 <b class="text-safety-amber text-xs uppercase block mb-1">${data.nombre}</b>
@@ -397,8 +383,6 @@
                         `);
 
                         markers[data.id] = markerToSave;
-                        
-                        // Pasamos el nombre retornado por el server
                         agregarCardLista(lat, lng, data.id, data.nombre);
                     }
                 })
