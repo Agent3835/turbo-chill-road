@@ -5,9 +5,8 @@
 
 **No dejes tu seguridad al azar. Navegación de precisión optimizada para entornos seguros.**
 
-### [🌐 SITIO WEB](https://agent3835.pythonanywhere.com/)
+### [SITIO WEB](https://agent3835.pythonanywhere.com/)
 
-</div>
 
 ---
 
@@ -44,3 +43,16 @@ cd turbo-chill-road
 ```bash
 python main.py
 ```
+## Justificación de Diseño
+
+<p align="justify">
+Las aplicaciones de mapas suelen utilizarse en movimiento; por ello, al usar acentos ámbar sobre un fondo oscuro reducimos la interferencia de elementos visuales, priorizando lo que realmente importa.
+</p>
+
+<p align="justify">
+Los controles de ZOOM los ubicamos abajo a la derecha, pensando en que la interfaz pueda ser utilizada con una sola mano en la versión móvil.
+</p>
+
+<p align="justify">
+En cuanto a la Landing Page, usamos un gran botón ámbar debajo del eslogan para atraer la atención inmediata del usuario.
+</p>
