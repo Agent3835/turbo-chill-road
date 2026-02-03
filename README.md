@@ -26,16 +26,16 @@ Para poner en marcha el panel de control táctico localmente, sigue estos comand
    python -m venv venv
    cd venv
    source bin/activate
+   
+1. **Instalar dependencias: Este proyecto utiliza Flask como motor de backend.**
+   ```bash
+   pip install flask
 
 2. **Clonar el repositorio:**
    ```bash
    git clone https://github.com/Agent3835/turbo-chill-road.git
    cd turbo-chill-road
    
-3. **Instalar dependencias: Este proyecto utiliza Flask como motor de backend.**
-   ```bash
-   pip install flask
-   
-4. **Ejecutar el servidor local:**
+3. **Ejecutar el servidor local:**
    ```bash
    python main.py
