@@ -28,7 +28,7 @@ cd venv
 source bin/activate
 ```
 
-1. **Instalar dependencias: Este proyecto utiliza Flask como motor de backend.**
+1. **Instalar dependencias: Este proyecto utiliza Flask como motor de backend:**
 ```bash
 pip install flask
 ```
