@@ -13,7 +13,7 @@
 
 Para poner en marcha el panel de control táctico localmente, sigue estos comandos en tu terminal:
 
-**En Windows**
+**En Windows:**
 
    ```bash
    python -m venv venv
@@ -26,6 +26,8 @@ Para poner en marcha el panel de control táctico localmente, sigue estos comand
    python -m venv venv
    cd venv
    source bin/activate
+   
+---
    
 1. **Instalar dependencias: Este proyecto utiliza Flask como motor de backend.**
    ```bash
