@@ -47,7 +47,7 @@ python main.py
 
 <p align="justify">
 Las aplicaciones de mapas suelen utilizarse en movimiento; por ello, al usar acentos ámbar sobre un fondo oscuro reducimos la interferencia de elementos visuales, priorizando lo que realmente importa.<br>
-Los colores ámbar intenso se eligieron por la colorimetría que transmite <strong>precaución y seguridad.</strong> El azul oscuro, que resalta los toques de contraste, es complementario del ámbar.
+El uso del ámbar intenso se eligió por su carga en la colorimetría, ya que comunica <strong>precaución y seguridad.</strong> El azul oscuro, al funcionar como color complementario, potencia el contraste visual y refuerza la legibilidad de los elementos clave de la interfaz.
 </p>
 
 <p align="justify">
