@@ -46,7 +46,8 @@ python main.py
 ## Justificación de Diseño
 
 <p align="justify">
-Las aplicaciones de mapas suelen utilizarse en movimiento; por ello, al usar acentos ámbar sobre un fondo oscuro reducimos la interferencia de elementos visuales, priorizando lo que realmente importa.
+Las aplicaciones de mapas suelen utilizarse en movimiento; por ello, al usar acentos ámbar sobre un fondo oscuro reducimos la interferencia de elementos visuales, priorizando lo que realmente importa.<br>
+Los colores ámbar intenso se eligieron por la colorimetría que transmite <strong>precaución y seguridad.</strong> El azul oscuro, que resalta los toques de contraste, es complementario del ámbar.
 </p>
 
 <p align="justify">
