@@ -16,3 +16,11 @@ Para poner en marcha el panel de control táctico localmente, sigue estos comand
    ```bash
    git clone [https://github.com/tu-usuario/chillroad.git](https://github.com/tu-usuario/chillroad.git)
    cd chillroad
+   
+2. **Instalar dependencias: Este proyecto utiliza Flask como motor de backend.**
+   ```bash
+   pip install flask
+   
+3. **Ejecutar el servidor local:**
+   ```bash
+   python main.py
