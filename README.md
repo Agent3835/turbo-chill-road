@@ -59,7 +59,7 @@ En cuanto a la Landing Page, usamos un gran botón ámbar debajo del eslogan par
 
 ## Créditos a la IA
 <p align="justify">
-Este código fue co-creado con Gemini Canvas.
+<strong>Este código fue co-creado con Gemini Canvas.</strong>
 </p>
 
 <p align="justify">
