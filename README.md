@@ -5,7 +5,7 @@
 
 **No dejes tu seguridad al azar. Navegación de precisión optimizada para entornos seguros.**
 
-### [SITIO WEB](https://agent3835.pythonanywhere.com/)
+### [Enlace a la app en vivo](https://agent3835.pythonanywhere.com/)
 
 
 ---
@@ -60,4 +60,32 @@ En cuanto a la Landing Page, usamos un gran botón ámbar debajo del eslogan par
 ## Créditos a la IA
 <p align="justify">
 Este código fue co-creado con Gemini Canvas. 
+</p>
+
+<p align="justify">
+Prompt principal: 
+Crea una Langind Page HTML (ChillRoad). Debe tener un Hero con una imagen de fondo de un mapa tipografico oscuro dependiendo del color de contraste. Un titulo grande y llamativo, con un fboton CTA prominente que diga "Explorar Mapa". Usa TailWInd CSS.
+Me ineteresa que que diseno utilice colores obscuros de fondo, de preferencia negros azulados con toques brillantes de colores que contraste como el Ámbar intenso para generar seguridad.
+El diseño debe inspirar aventura/seguridad.
+</p>
+
+<p align="justify">
+Segundo Prompt:
+"Genera un archivo HTML que incluya la librería Leaflet.js (vía CDN) y Tailwind CSS. Crea un contenedor div 'map' que ocupe el 100% del ancho y 500px de alto (o 'h-screen'). Inicializa el mapa centrado en [Tijuena] con un tilelayer de OpenStreetMap. Asegúrate de que los botones de zoom estén en una posición fácil de alcanzar."
+</p>
+
+<p align="justify">
+Tercer Prompt:
+"Escribe un script en JS para Leaflet. Cuando el usuario haga clic en el mapa: 1. Ponga un marcador temporal inmediatamente con posibilidad de personalizar el nombre de marcador. 2. Abra un popup que pregunte '¿Guardar este punto?'. 3. Al confirmar, envíe las coordenadas (lat, long) a un endpoint Flask /guardar_punto usando fetch. Muestra un 'toast' o notificación de 'Guardando...' mientras se procesa."
+EL punto tooltip debe tener la posibilidad de descartar el punto generado.
+</p>
+
+<p align="justify">
+Cuarto Prompt:
+"Modifica la interfaz para tener dos columnas (o pestañas en móvil): 'Mapa' y 'Lista de Lugares'. Cuando se agregue un marcador en el mapa, debe aparecer también como un texto descriptivo en la sección de Lista (ej. 'Punto en Lat: X, Long: Y'). Asegúrate de que los botones del mapa tengan atributos 'aria-label' como 'Acercar mapa' o 'Alejar mos elementos que se vayan creando en la columna lateral que almacena los puntos, tambien debe poderse eliminar los puntos creados con un icono de descartar.
+</p>
+
+## Unificacion
+<p align="justify">
+Los prompts usados se realizaron por separado al comienzo, pero se unificaron para construir la app que se presenta en este .md
 </p>
