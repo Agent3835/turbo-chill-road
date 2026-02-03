@@ -1,5 +1,3 @@
-<div align="center">
-
 # CHILLRoad - MAPAS PARA LO INCIERTO
 
 ![Estado](https://img.shields.io/badge/Estado-Prototipo-f59e0b?style=for-the-badge)
@@ -38,7 +36,7 @@ pip install flask
 
 2. **Clonar el repositorio:**
 ```bash
-git clone [https://github.com/Agent3835/turbo-chill-road.git](https://github.com/Agent3835/turbo-chill-road.git)
+git clone https://github.com/Agent3835/turbo-chill-road.git
 cd turbo-chill-road
 ```
 
